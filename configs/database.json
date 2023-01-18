@@ -1,4 +1,4 @@
 {
-    "databaseConnection": "root:P@ssw0rd@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local",
-    "port": ":3333"
+    "databaseConnection": "root:@tcp(localhost:3306)/test2?parseTime=true",
+    "port": ":8080"
 }

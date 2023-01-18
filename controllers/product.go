@@ -4,14 +4,14 @@ import (
 	"net/http"
 	repo "pontakorn322/demo_gin_api/repository/v1"
 	"pontakorn322/demo_gin_api/utils"
-
+	"strconv"
 	"github.com/gin-gonic/gin"
 )
 
 func ProductEndPoint(router *gin.RouterGroup) {
 	route := router.Group("/product")
 	route.POST("/addProduct", InsertProduct)
-	route.GET("/getProduct", GetProduct)
+	route.GET("/getProduct/:id", GetProduct)
 	route.GET("/getAllProduct", GetAllProduct)
 }
 
@@ -46,9 +46,19 @@ func GetAllProduct(ctx *gin.Context) {
 	}))
 }
 
-func GetProduct(c *gin.Context) {
-	var books []models.Book
-	models.DB.Find(&books)
-  
-	c.JSON(http.StatusOK, gin.H{"data": books})
-  }
+func GetProduct(ctx *gin.Context) { 
+	paramID := ctx.Param("id") 
+	productID, err:=strconv.Atoi(paramID)
+	res, err := repo.GetProduct(productID); 
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.SuccessMessage(utils.DataObject{
+		Title:       "Get Product",
+		Description: "Get Product Success",
+		Item: res,
+	}))
+}
+	
+

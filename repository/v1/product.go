@@ -28,12 +28,13 @@ func GetAllProduct()([]models.Product , error) {
 	}
 	return products,nil
 }
-
-func GetProduct()([]models.Product , error) {
-	var products []models.Product
-	if err := repository.DB.Find(&products).Where("is_active = true").Error; err != nil {
-		return nil,err
+func GetProduct(id int)(models.Product , error) {
+	var products models.Product
+	if err := repository.DB.First(&products,"id = ?",id).Error; err != nil {
+		return products,err
 	}
 	return products,nil
 }
+
+
 
