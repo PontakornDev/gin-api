@@ -3,6 +3,7 @@ package main
 import (
 	"pontakorn322/demo_gin_api/repository"
 	router "pontakorn322/demo_gin_api/routers"
+	"pontakorn322/demo_gin_api/utils"
 )
 
 func main() {
@@ -15,6 +16,7 @@ func main() {
 	r := router.SetUpRouter()
 
 	router.SetUpRouteGroup(r)
+	config := utils.ReadConfigs()
 
-	r.Run(":3333")
+	r.Run(config.Port)
 }
