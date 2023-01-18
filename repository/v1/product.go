@@ -31,7 +31,7 @@ func GetAllProduct()([]models.Product , error) {
 
 func GetProduct()([]models.Product , error) {
 	var products []models.Product
-	if err := repository.DB.Find(&products).Error; err != nil {
+	if err := repository.DB.Find(&products).Where("is_active = true").Error; err != nil {
 		return nil,err
 	}
 	return products,nil
