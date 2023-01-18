@@ -11,10 +11,11 @@ type ReqProduct struct {
 }
 
 func AddProduct(r ReqProduct) error {
-	if err := repository.DB.Create(&models.Product{
+	data := models.Product{
 		Code:  r.Code,
 		Price: r.Price,
-	}).Error; err != nil {
+	}
+	if err := repository.DB.Create(&data).Error; err != nil {
 		return err
 	}
 	return nil

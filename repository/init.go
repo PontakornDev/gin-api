@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"pontakorn322/demo_gin_api/models"
+	"pontakorn322/demo_gin_api/utils"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -11,8 +12,8 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() error {
-	dsn := "root:@tcp(localhost:3306)/test2?parseTime=true"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	config := utils.ReadConfigs()
+	db, err := gorm.Open(mysql.Open(config.DatabaseConnection), &gorm.Config{})
 	if err != nil {
 		return err
 	}
