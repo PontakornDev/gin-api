@@ -11,6 +11,8 @@ import (
 func ProductEndPoint(router *gin.RouterGroup) {
 	route := router.Group("/product")
 	route.POST("/addProduct", InsertProduct)
+	route.GET("/getProduct", GetProduct)
+	route.GET("/getAllProduct", GetAllProduct)
 }
 
 func InsertProduct(ctx *gin.Context) {
@@ -30,3 +32,23 @@ func InsertProduct(ctx *gin.Context) {
 		Description: "Add Success",
 	}))
 }
+
+func GetAllProduct(ctx *gin.Context) {
+	res, err := repo.GetAllProduct(); 
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.SuccessMessage(utils.DataObject{
+		Title:       "Getall Product",
+		Description: "Getall Success",
+		Item: res,
+	}))
+}
+
+func GetProduct(c *gin.Context) {
+	var books []models.Book
+	models.DB.Find(&books)
+  
+	c.JSON(http.StatusOK, gin.H{"data": books})
+  }

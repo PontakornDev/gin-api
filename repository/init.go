@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() error {
-	dsn := "root:P@ssw0rd@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:@tcp(localhost:3306)/test2?parseTime=true"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err

@@ -19,3 +19,20 @@ func AddProduct(r ReqProduct) error {
 	}
 	return nil
 }
+
+func GetAllProduct()([]models.Product , error) {
+	var products []models.Product
+	if err := repository.DB.Find(&products).Error; err != nil {
+		return nil,err
+	}
+	return products,nil
+}
+
+func GetProduct()([]models.Product , error) {
+	var products []models.Product
+	if err := repository.DB.Find(&products).Error; err != nil {
+		return nil,err
+	}
+	return products,nil
+}
+
