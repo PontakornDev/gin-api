@@ -13,6 +13,7 @@ func ProductEndPoint(router *gin.RouterGroup) {
 	route.POST("/addProduct", InsertProduct)
 	route.GET("/getProduct/:id", GetProduct)
 	route.GET("/getAllProduct", GetAllProduct)
+	route.DELETE("/deleteProduct/:id", DeleteProduct)
 }
 
 func InsertProduct(ctx *gin.Context) {
@@ -60,5 +61,20 @@ func GetProduct(ctx *gin.Context) {
 		Item: res,
 	}))
 }
-	
+
+
+func DeleteProduct(ctx *gin.Context) { 
+	paramID := ctx.Param("id") 
+	productID, err:=strconv.Atoi(paramID)
+	res, err := repo.DeleteProduct(productID); 
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.SuccessMessage(utils.DataObject{
+		Title:       "Delete Product",
+		Description: "Delete Product Success",
+		Item: res,
+	}))
+}
 

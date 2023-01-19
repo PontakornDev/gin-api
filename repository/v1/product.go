@@ -3,6 +3,8 @@ package repository
 import (
 	"pontakorn322/demo_gin_api/models"
 	"pontakorn322/demo_gin_api/repository"
+
+	
 )
 
 type ReqProduct struct {
@@ -35,6 +37,10 @@ func GetProduct(id int)(models.Product , error) {
 	}
 	return products,nil
 }
-
-
-
+func DeleteProduct(id int) (models.Product , error) {
+var products models.Product
+	if err := repository.DB.Delete(&products,"id = ?",id).Error; err != nil {
+		return products,err
+	}
+	return products,nil
+}
