@@ -6,6 +6,7 @@ import (
 	"pontakorn322/demo_gin_api/utils"
 	"strconv"
 	"github.com/gin-gonic/gin"
+	"pontakorn322/demo_gin_api/models"
 )
 
 func ProductEndPoint(router *gin.RouterGroup) {
@@ -13,6 +14,7 @@ func ProductEndPoint(router *gin.RouterGroup) {
 	route.POST("/addProduct", InsertProduct)
 	route.GET("/getProduct/:id", GetProduct)
 	route.GET("/getAllProduct", GetAllProduct)
+	route.PUT("/updateProduct", UpdateProduct)
 	route.DELETE("/deleteProduct/:id", DeleteProduct)
 }
 
@@ -42,7 +44,7 @@ func GetAllProduct(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, utils.SuccessMessage(utils.DataObject{
 		Title:       "Getall Product",
-		Description: "Getall Success",
+		Description: "Getall Product Success",
 		Item: res,
 	}))
 }
@@ -78,3 +80,23 @@ func DeleteProduct(ctx *gin.Context) {
 	}))
 }
 
+func UpdateProduct(ctx *gin.Context) {
+	var req models.Product
+	err := ctx.BindJSON(&req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+	res ,err := repo.UpdateProduct(req);
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, utils.SuccessMessage(utils.DataObject{
+		Title:       "Update Product",
+		Description: "Update Product Success",
+		Item: res,
+
+	}))
+}
