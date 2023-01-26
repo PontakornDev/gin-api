@@ -16,3 +16,7 @@ tmp
 
 # Go workspace file
 go.work
+
+mariadb/*
+
+.air.toml

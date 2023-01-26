@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  demo_api:
+    container_name: demo_api
+    build: .
+    environment:
+      PORT: 3333
+      MYSQLDB: users:P@ssw0rd@tcp(demo_db:3306)/test?charset=utf8mb4&parseTime=True&loc=Local
+    working_dir: /app
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/app
+    depends_on:
+      - demo_db
+  demo_db:
+    container_name: demo_mariadb
+    image: mariadb:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=P@ssw0rd
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=users
+      - MYSQL_PASSWORD=P@ssw0rd
+    volumes:
+      - ./mariadb/initdb/:/docker-entrypoint-initdb.d/
+      - ./mariadb/data/:/var/lib/mysql/
+    ports:
+      - "33061:3306"
