@@ -24,5 +24,5 @@ func ConnectDB() error {
 
 func MigrationDB() {
 	DB.AutoMigrate(&models.Product{})
-	// DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.User{})
 }

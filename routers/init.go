@@ -16,7 +16,7 @@ func SetUpRouter() *gin.Engine {
 	router := gin.Default()
 
 	router.GET("/", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "demo api")
+		ctx.String(http.StatusOK, "Hello demo api")
 	})
 
 	return router
